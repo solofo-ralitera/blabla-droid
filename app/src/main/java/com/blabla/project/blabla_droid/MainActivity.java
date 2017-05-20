@@ -18,7 +18,5 @@ public class MainActivity extends AppCompatActivity {
         // Do something in response to button
         Intent intent = new Intent(this, PlayListActivity.class);
         startActivity(intent);
-
-
     }
 }
