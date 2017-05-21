@@ -50,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onRestart() {  // After a pause OR at startup
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
     /**
      * Login click action
      * @param view
