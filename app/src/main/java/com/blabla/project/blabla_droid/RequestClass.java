@@ -80,11 +80,11 @@ public class RequestClass extends Application {
     }
 
     private String getToken(FragmentActivity context) {
-        if(mSharedPref == null) {
+        //if(mSharedPref == null) {
             mSharedPref = context.getPreferences(Context.MODE_PRIVATE);
-        }
+        //}
         //String s = getString(R.string.blabla_user_token);
-        return "Bearer " + mSharedPref.getString("blabla_user_token", "");
+        return "Bearer " + mSharedPref.getString("token", "");
     }
 
     public void postString(final FragmentActivity context, String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
@@ -110,7 +110,7 @@ public class RequestClass extends Application {
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                headers.put("Authorization", getToken(context));
+                //headers.put("Authorization", getToken(context));
                 return headers;
             }
         };

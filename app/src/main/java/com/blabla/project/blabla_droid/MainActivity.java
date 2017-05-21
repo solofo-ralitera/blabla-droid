@@ -61,34 +61,34 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
         RequestClass.getInstance(this).postJson(
-                this,
-                "/login_check",
-                headers,
-                params,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Login success, store token
-                        try {
-                            // Read & store token
-                            String token = response.getString("token");
-                            SharedPreferences.Editor editor = sharedPref.edit();
-                            editor.putString(getString(R.string.blabla_user_token), token);
-                            editor.apply();
-                            // Reload login page
-                            finish();
-                            startActivity(getIntent());
-                        }catch (JSONException e) {
-                            // TODO login error
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
+            this,
+            "/login_check",
+            headers,
+            params,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    // Login success, store token
+                    try {
+                        // Read & store token
+                        String token = response.getString("token");
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.blabla_user_token), token);
+                        editor.apply();
+                        // Reload login page
+                        finish();
+                        startActivity(getIntent());
+                    }catch (JSONException e) {
                         // TODO login error
                     }
                 }
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    // TODO login error
+                }
+            }
         );
     }
 
