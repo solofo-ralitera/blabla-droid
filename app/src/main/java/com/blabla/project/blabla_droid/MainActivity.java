@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
         RequestClass.getInstance(this).postJson(
+                this,
                 "/login_check",
                 headers,
                 params,

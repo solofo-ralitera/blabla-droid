@@ -6,7 +6,9 @@ package com.blabla.project.blabla_droid;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.support.v4.app.FragmentActivity;
 import android.util.LruCache;
 
 import com.android.volley.AuthFailureError;
@@ -28,6 +30,7 @@ public class RequestClass extends Application {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
+    private SharedPreferences mSharedPref;
 
     private static String ApiUrl = "http://10.0.2.2/api-project/web/app_dev.php/api";
 
@@ -76,7 +79,15 @@ public class RequestClass extends Application {
         return mImageLoader;
     }
 
-    public void postString(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
+    private String getToken(FragmentActivity context) {
+        if(mSharedPref == null) {
+            mSharedPref = context.getPreferences(Context.MODE_PRIVATE);
+        }
+        //String s = getString(R.string.blabla_user_token);
+        return "Bearer " + mSharedPref.getString("blabla_user_token", "");
+    }
+
+    public void postString(final FragmentActivity context, String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
         url = ApiUrl + url;
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url, successListener, errorListener){
             @Override
@@ -86,18 +97,20 @@ public class RequestClass extends Application {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                headers.put("Authorization", getToken(context));
                 return headers;
             }
         };
         addToRequestQueue(stringRequest);
     }
 
-    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
+    public void postJson(final FragmentActivity context, String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
         url = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
+                headers.put("Authorization", getToken(context));
                 return headers;
             }
         };
