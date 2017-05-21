@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
         }
         // Else load main_menu layout
         else {
+            // Store token to request class
+            RequestClass.getInstance(this).setToken(token);
+
             super.onCreate(savedInstanceState);
             setContentView(R.layout.main_menu);
             // List of menu
@@ -61,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         final SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
 
         RequestClass.getInstance(this).postJson(
-            this,
             "/login_check",
             headers,
             params,

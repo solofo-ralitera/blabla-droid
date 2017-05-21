@@ -33,6 +33,7 @@ public class RequestClass extends Application {
     private SharedPreferences mSharedPref;
 
     private static String ApiUrl = "http://10.0.2.2/api-project/web/app_dev.php/api";
+    private String mToken = "";
 
     private RequestClass(Context context) {
         mCtx = context;
@@ -79,15 +80,15 @@ public class RequestClass extends Application {
         return mImageLoader;
     }
 
-    private String getToken(FragmentActivity context) {
-        //if(mSharedPref == null) {
-            mSharedPref = context.getPreferences(Context.MODE_PRIVATE);
-        //}
-        //String s = getString(R.string.blabla_user_token);
-        return "Bearer " + mSharedPref.getString("token", "");
+
+    public void setToken(String token) {
+        mToken = token;
+    }
+    private String getToken() {
+        return "Bearer " + mToken;
     }
 
-    public void postString(final FragmentActivity context, String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
+    public void postString(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
         url = ApiUrl + url;
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url, successListener, errorListener){
             @Override
@@ -97,20 +98,20 @@ public class RequestClass extends Application {
 
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                headers.put("Authorization", getToken(context));
+                headers.put("Authorization", getToken());
                 return headers;
             }
         };
         addToRequestQueue(stringRequest);
     }
 
-    public void postJson(final FragmentActivity context, String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
+    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
         url = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, errorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                //headers.put("Authorization", getToken(context));
+                headers.put("Authorization", getToken());
                 return headers;
             }
         };

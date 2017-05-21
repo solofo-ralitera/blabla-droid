@@ -39,7 +39,6 @@ public class PlayListActivity extends AppCompatActivity {
         headers.put("Authorization", "Bearer " + mSharedPref.getString(getString(R.string.blabla_user_token), ""));
 
         RequestClass.getInstance(this).postJson(
-            this,
             "/playlist",
             headers,
             params,
@@ -58,24 +57,36 @@ public class PlayListActivity extends AppCompatActivity {
         );
     }
 
-    protected void drawPlayList(JSONObject playlist) {
+    protected void drawPlayList(JSONObject playlists) {
         /*
         String[] playlist = {"List 1", "List 2", "List 3", "List 4"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playlist);
         ListView listView = (ListView) findViewById(R.id.listview_playlist);
         listView.setAdapter(adapter);
         */
         try {
-            Iterator<?> keys = playlist.keys();
+            Iterator<?> keys = playlists.keys();
+            String[] playlist = new String[playlists.length()];
             JSONObject item;
+            int i = 0;
             while (keys.hasNext()) {
                 String key = (String) keys.next();
-                if (playlist.get(key) instanceof JSONObject) {
-                    item = (JSONObject) playlist.get(key);
+                if (playlists.get(key) instanceof JSONObject) {
+                    item = (JSONObject) playlists.get(key);
+                    playlist[i] = item.getString("title");
+                    i++;
                 }
             }
+
+            // Add item to listview
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playlist);
+            ListView listView = (ListView) findViewById(R.id.listview_playlist);
+            listView.setAdapter(adapter);
+
+            // TODO : http://tutos-android-france.com/listview-afficher-une-liste-delements/
+
         }catch(JSONException e) {
 
         }
+
     }
 }
