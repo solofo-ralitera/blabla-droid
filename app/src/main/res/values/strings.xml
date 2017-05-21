@@ -3,4 +3,6 @@
     <string name="Login">Login</string>
     <string name="Password">Password</string>
     <string name="Playlist">Playlist</string>
+    <string name="blabla_user_token">token</string>
+    <string name="Logout">Logout</string>
 </resources>

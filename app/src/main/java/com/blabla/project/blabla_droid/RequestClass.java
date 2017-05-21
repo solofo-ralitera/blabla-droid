@@ -29,6 +29,8 @@ public class RequestClass extends Application {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
+    private static String ApiUrl = "http://10.0.2.2/api-project/web/app_dev.php/api";
+
     private RequestClass(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
@@ -75,6 +77,7 @@ public class RequestClass extends Application {
     }
 
     public void postString(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<String> successListener, Response.ErrorListener errorListener) {
+        url = ApiUrl + url;
         StringRequest stringRequest = new StringRequest(Request.Method.POST,url, successListener, errorListener){
             @Override
             protected Map<String,String> getParams(){
@@ -90,6 +93,7 @@ public class RequestClass extends Application {
     }
 
     public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
+        url = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, errorListener){
             @Override

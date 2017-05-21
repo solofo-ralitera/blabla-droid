@@ -84,15 +84,4 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintHorizontal_bias="0.501" />
 
-    <Button
-        android:id="@+id/button_playlist"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:onClick="openPlayList"
-        android:text="@string/Playlist"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
-
 </android.support.constraint.ConstraintLayout>
