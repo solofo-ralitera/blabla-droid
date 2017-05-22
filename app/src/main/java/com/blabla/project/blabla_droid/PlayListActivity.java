@@ -1,18 +1,14 @@
 package com.blabla.project.blabla_droid;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.blabla.project.blabla_droid.PLaylist.ListViewItem;
 import com.blabla.project.blabla_droid.PLaylist.ListViewItemAdapter;
 

@@ -10,8 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.util.LruCache;
 
 import com.android.volley.AuthFailureError;
@@ -34,7 +32,6 @@ public class RequestClass extends Application {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static Context mCtx;
-    private SharedPreferences mSharedPref;
 
     private static String ApiUrl = "http://10.0.2.2/api-project/web/app_dev.php/api";
     private String mToken = "";
