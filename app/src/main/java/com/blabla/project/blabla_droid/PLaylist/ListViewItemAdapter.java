@@ -40,13 +40,14 @@ public class ListViewItemAdapter extends ArrayAdapter<ListViewItem> {
             convertView.setTag(viewHolder);
         }
 
-        //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
-        ListViewItem tweet = getItem(position);
+        // get item [position] of List<ListViewItem>
+        ListViewItem item = getItem(position);
 
-        //il ne reste plus qu'à remplir notre vue
-        viewHolder.track.setText(tweet.getTrack());
-        viewHolder.file.setText(tweet.getFile());
-        viewHolder.image.setImageDrawable(new ColorDrawable(tweet.getImage()));
+        //fill the view
+        viewHolder.track.setText(item.getTrack());
+        viewHolder.file.setText(item.getFile());
+        //viewHolder.image.setImageResource(item.getImage());
+        viewHolder.image.setImageDrawable(new ColorDrawable(item.getImage()));
 
         return convertView;
     }

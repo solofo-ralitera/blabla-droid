@@ -4,17 +4,21 @@ package com.blabla.project.blabla_droid;
  * Created by popolos on 21/05/2017.
  */
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.LruCache;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
@@ -105,10 +109,34 @@ public class RequestClass extends Application {
         addToRequestQueue(stringRequest);
     }
 
-    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, Response.ErrorListener errorListener) {
+    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
         url = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, errorListener){
+
+        Response.ErrorListener fErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                // Authentication error
+                if(error.toString().endsWith("AuthFailureError")) {
+                    // Remove key
+                    SharedPreferences sharedPref = ((Activity) mCtx).getPreferences(Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.remove(mCtx.getString(R.string.blabla_user_token));
+                    editor.apply();
+                    RequestClass.this.setToken("");
+
+                    // Reload Main page
+                    Intent intent = new Intent(mCtx, MainActivity.class);
+                    mCtx.startActivity(intent);
+                }
+                // Else call user func
+                else {
+                    errorListener.onErrorResponse(error);
+                }
+            }
+        };
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, fErrorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 headers.put("Authorization", getToken());
