@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
@@ -106,9 +107,64 @@ public class RequestClass extends Application {
         addToRequestQueue(stringRequest);
     }
 
-    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
-        url = ApiUrl + url;
+    /**
+     *
+     * @param url
+     * @param headers
+     * @param params
+     */
+    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params) {
+        postJson(url, headers, params,
+            new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {}
+            },
+            new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {}
+            }
+        );
+    }
+
+    /**
+     *
+     * @param url
+     * @param headers
+     * @param params
+     * @param successListener
+     * @param errorListener
+     */
+    public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, final Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
+        final String fUrl = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
+
+        Response.Listener<JSONObject> fSuccessListener = new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                // Login success, store token
+                if(fUrl.endsWith("/login_check")) {
+                    try {
+                        // Read & store token
+                        String token = response.getString(mCtx.getString(R.string.blabla_user_token));
+                        SharedPreferences sharedPref = ((Activity) mCtx).getPreferences(Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(mCtx.getString(R.string.blabla_user_token), token);
+                        editor.apply();
+                        RequestClass.this.setToken(token);
+
+                        // Reload Main page
+                        Intent intent = new Intent(mCtx, MainActivity.class);
+                        mCtx.startActivity(intent);
+                    } catch (JSONException e) {
+                        // TODO login error
+                    }
+                }
+                // Call custom func
+                else {
+                    successListener.onResponse(response);
+                }
+            }
+        };
 
         Response.ErrorListener fErrorListener = new Response.ErrorListener() {
             @Override
@@ -133,7 +189,7 @@ public class RequestClass extends Application {
             }
         };
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, jsonParameters, successListener, fErrorListener){
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, fUrl, jsonParameters, fSuccessListener, fErrorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 headers.put("Authorization", getToken());
