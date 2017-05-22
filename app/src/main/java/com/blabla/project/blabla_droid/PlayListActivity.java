@@ -2,6 +2,7 @@ package com.blabla.project.blabla_droid;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -11,12 +12,16 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.blabla.project.blabla_droid.PLaylist.ListViewItem;
+import com.blabla.project.blabla_droid.PLaylist.ListViewItemAdapter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 public class PlayListActivity extends AppCompatActivity {
@@ -58,28 +63,21 @@ public class PlayListActivity extends AppCompatActivity {
     }
 
     protected void drawPlayList(JSONObject playlists) {
-        /*
-        String[] playlist = {"List 1", "List 2", "List 3", "List 4"};
-        ListView listView = (ListView) findViewById(R.id.listview_playlist);
-        listView.setAdapter(adapter);
-        */
         try {
-            Iterator<?> keys = playlists.keys();
-            String[] playlist = new String[playlists.length()];
+            List<ListViewItem> items = new ArrayList<>();
             JSONObject item;
-            int i = 0;
+            Iterator<?> keys = playlists.keys();
             while (keys.hasNext()) {
                 String key = (String) keys.next();
                 if (playlists.get(key) instanceof JSONObject) {
                     item = (JSONObject) playlists.get(key);
-                    playlist[i] = item.getString("title");
-                    i++;
+                    items.add(new ListViewItem(Color.BLUE, item.getString("title"), item.getString("title")));
                 }
             }
 
             // Add item to listview
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, playlist);
             ListView listView = (ListView) findViewById(R.id.listview_playlist);
+            ListViewItemAdapter adapter = new ListViewItemAdapter(this, items);
             listView.setAdapter(adapter);
 
             // TODO : http://tutos-android-france.com/listview-afficher-une-liste-delements/

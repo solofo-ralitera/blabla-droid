@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+    <ImageView
+        android:id="@+id/playlistitem_image"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        tools:background="#AAA" />
+
+    <TextView
+        android:id="@+id/playlistitem_track"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/playlistitem_image"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/playlistitem_image"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="Track" />
+
+    <TextView
+        android:id="@+id/playlistitem_file"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/playlistitem_track"
+        android:layout_below="@+id/playlistitem_track"
+        android:textColor="@android:color/black"
+        tools:text="File" />
+
+</RelativeLayout>
