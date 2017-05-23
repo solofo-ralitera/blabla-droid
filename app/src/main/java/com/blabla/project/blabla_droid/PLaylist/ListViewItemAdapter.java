@@ -1,7 +1,6 @@
 package com.blabla.project.blabla_droid.PLaylist;
 
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,9 +8,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
 import com.blabla.project.blabla_droid.R;
+import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
 
 /**
  * Created by popolos on 22/05/2017.
@@ -47,7 +52,8 @@ public class ListViewItemAdapter extends ArrayAdapter<ListViewItem> {
         viewHolder.track.setText(item.getTrack());
         viewHolder.file.setText(item.getFile());
         //viewHolder.image.setImageResource(item.getImage());
-        viewHolder.image.setImageDrawable(new ColorDrawable(item.getImage()));
+        //viewHolder.image.setImageDrawable(new ColorDrawable(item.getImage()));
+        Picasso.with(parent.getContext()).load("http://10.0.2.2/beach.jpeg").into(viewHolder.image);
 
         return convertView;
     }
@@ -57,4 +63,5 @@ public class ListViewItemAdapter extends ArrayAdapter<ListViewItem> {
         public TextView file;
         public ImageView image;
     }
+
 }

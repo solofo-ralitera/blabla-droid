@@ -103,13 +103,13 @@ public class MainActivity extends AppCompatActivity {
     // Create a message handling object as an anonymous class.
     private AdapterView.OnItemClickListener menuListClickedHandler = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView parent, View listView, int position, long id) {
-            Object o = parent.getItemAtPosition(position);
-            if(o.toString().equals(getString(R.string.Playlist))) {
-                openPlayList(listView);
-            }
-            else if(o.toString().equals(getString(R.string.Logout))) {
-                logout(listView);
-            }
+        Object o = parent.getItemAtPosition(position);
+        if(o.toString().equals(getString(R.string.Playlist))) {
+            openPlayList(listView);
+        }
+        else if(o.toString().equals(getString(R.string.Logout))) {
+            logout(listView);
+        }
         }
     };
 }
