@@ -34,7 +34,7 @@ public class RequestClass extends Application {
     private ImageLoader mImageLoader;
     private static Context mCtx;
 
-    private static String ApiUrl = "http://10.0.2.2/api-project/web/app_dev.php/api";
+    private static String ApiUrl = "http://192.168.33.77/api-project/web/app_dev.php/api";
     private String mToken = "";
 
     private RequestClass(Context context) {
