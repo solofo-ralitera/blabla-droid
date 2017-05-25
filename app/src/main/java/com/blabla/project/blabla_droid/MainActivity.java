@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Main menu item click
+     * Main menu item click test
      */
     // Create a message handling object as an anonymous class.
     private AdapterView.OnItemClickListener menuListClickedHandler = new AdapterView.OnItemClickListener() {
