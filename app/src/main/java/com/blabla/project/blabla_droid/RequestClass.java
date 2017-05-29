@@ -22,6 +22,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -86,7 +87,7 @@ public class RequestClass extends Application {
     public void setToken(String token) {
         mToken = token;
     }
-    private String getToken() {
+    public String getToken() {
         return "Bearer " + mToken;
     }
 
@@ -135,6 +136,30 @@ public class RequestClass extends Application {
      * @param errorListener
      */
     public void postJson(String url, final Map<String,String> headers, final Map<String,String> params, final Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
+        sendRequest(Request.Method.POST, url, headers, params, successListener, errorListener);
+    }
+
+    /**
+     *
+     * @param url
+     * @param headers
+     * @param params
+     * @param successListener
+     * @param errorListener
+     */
+    public void getJson(String url, final Map<String,String> headers, final Map<String,String> params, final Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
+        sendRequest(Request.Method.GET, url, headers, params, successListener, errorListener);
+    }
+
+    /**
+     *
+     * @param url
+     * @param headers
+     * @param params
+     * @param successListener
+     * @param errorListener
+     */
+    public void sendRequest(int method, String url, final Map<String,String> headers, final Map<String,String> params, final Response.Listener<JSONObject> successListener, final Response.ErrorListener errorListener) {
         final String fUrl = ApiUrl + url;
         JSONObject jsonParameters = new JSONObject(params);
 
@@ -189,7 +214,7 @@ public class RequestClass extends Application {
             }
         };
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, fUrl, jsonParameters, fSuccessListener, fErrorListener){
+        JsonObjectRequest stringRequest = new JsonObjectRequest(method, fUrl, jsonParameters, fSuccessListener, fErrorListener){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 headers.put("Authorization", getToken());

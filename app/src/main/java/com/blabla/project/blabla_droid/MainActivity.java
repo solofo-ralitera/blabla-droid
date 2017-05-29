@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.main_menu);
             // List of menu
             String[] menuList = {
+                getString(R.string.Followers),
                 getString(R.string.Playlist),
                 getString(R.string.Logout),
             };
@@ -98,6 +99,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
+     * Called when to open playlist
+     * @param view
+     */
+    public void followers(View view) {
+        // Open playlist activity
+        Intent intent = new Intent(this, FollowersActivity.class);
+        startActivity(intent);
+    }
+
+    /**
      * Main menu item click
      */
     // Create a message handling object as an anonymous class.
@@ -109,6 +120,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else if(o.toString().equals(getString(R.string.Logout))) {
             logout(listView);
+        }
+        else if(o.toString().equals(getString(R.string.Followers))) {
+            followers(listView);
         }
         }
     };

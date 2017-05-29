@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.blabla.project.blabla_droid"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.blabla.project.blabla_droid">
 
-    <!--uses-sdk tools:overrideLibrary="android.support.v7.appcompat, android.support.v4, android.support.fragment, android.support.mediacompat, android.support.coreui, android.support.coreutils, android.support.graphics.drawable, android.support.compat, android.support.constraint"/-->
+    <!-- uses-sdk tools:overrideLibrary="android.support.v7.appcompat, android.support.v4, android.support.fragment, android.support.mediacompat, android.support.coreui, android.support.coreutils, android.support.graphics.drawable, android.support.compat, android.support.constraint"/ -->
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -27,6 +27,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity
+            android:name=".FollowersActivity"
+            android:label="@string/title_activity_followers"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
